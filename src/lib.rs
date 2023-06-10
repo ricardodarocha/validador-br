@@ -74,7 +74,7 @@ pub mod gama {
     }
 }
 pub mod validador_ie {
-    pub struct IeUf();
+    pub struct IeUf<'data>(pub &'data str);
 }
 
 pub mod validador {
@@ -82,14 +82,14 @@ pub mod validador {
     use crate::gama::{calc_digito, calc_digito_mod11, somente_digitos};
     use crate::validador_ie::IeUf;
 
-    pub struct Cpf(pub &'static str);
-    pub struct Cnpj(pub &'static str);
-    pub struct Ie(pub IeUf);
-    pub struct CartaoCredito(pub &'static str);
-    pub struct TituloEleitor(pub &'static str);
-    pub struct Cnh(pub &'static str);
-    pub struct Rg(pub &'static str);
-    pub struct Pis(pub &'static str);
+    pub struct Cpf<'data>(pub &'data str);
+    pub struct Cnpj<'data>(pub &'data str);
+    pub struct Ie<'data>(pub IeUf<'data>);
+    pub struct CartaoCredito<'data>(pub &'data str);
+    pub struct TituloEleitor<'data>(pub &'data str);
+    pub struct Cnh<'data>(pub &'data str);
+    pub struct Rg<'data>(pub &'data str);
+    pub struct Pis<'data>(pub &'data str);
 
     pub trait Validador {
         fn validar(&self) -> bool {
@@ -97,7 +97,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for Cpf {
+    impl Validador for Cpf<'_> {
         fn validar(&self) -> bool {
             let multiplicadores = vec![10, 9, 8, 7, 6, 5, 4, 3, 2];
             let digitos = somente_digitos(self.0, 11);
@@ -115,7 +115,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for Cnpj {
+    impl Validador for Cnpj<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
             let digitos = somente_digitos(self.0, 14);
@@ -134,7 +134,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for CartaoCredito {
+    impl Validador for CartaoCredito<'_> {
         fn validar(&self) -> bool {
             let mut numbers = somente_digitos(self.0, self.0.len());
             numbers.reverse();
@@ -154,7 +154,7 @@ pub mod validador {
         }
     }
     
-    impl Validador for TituloEleitor {
+    impl Validador for TituloEleitor<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![2, 3, 4, 5, 6, 7, 8, 9];
             let digitos = somente_digitos(self.0, 12);
@@ -172,7 +172,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for Cnh {
+    impl Validador for Cnh<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![9, 8, 7, 6, 5, 4, 3, 2, 1];
             let digitos = somente_digitos(self.0, 11);
@@ -206,7 +206,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for Rg {
+    impl Validador for Rg<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![2, 3, 4, 5, 6, 7, 8, 9];
             let digitos = somente_digitos(self.0, 9);
@@ -217,7 +217,7 @@ pub mod validador {
         }
     }
 
-    impl Validador for Pis {
+    impl Validador for Pis<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![3,2,9,8,7,6,5,4,3,2];
             let mut digitos = somente_digitos(self.0, 11);
