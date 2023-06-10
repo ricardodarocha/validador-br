@@ -22,7 +22,7 @@ struct Ie(Uf, &str); ❌
 
 - Implementar os documentos mais comuns. ✅
 - Ignora caracteres especiais, espaços e pontuações. ✅
-- Valida antecipadamente a quantidade de dígitos numéricos. ❌
+- Valida antecipadamente a quantidade de dígitos numéricos. 000.000.00_.XX ❌
 - Analisas repetições de dígitos como `111.111.111-11` ou `000.000.000-00`. ❌
 - Validar inscrição estadual de cada estado. ❌
 - Implementar novos tipos de documentos. ❌
