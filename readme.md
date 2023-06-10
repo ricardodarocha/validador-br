@@ -3,7 +3,7 @@
 _Brazilian document numbers validator written in rust_  
 Validador para diversos documentos nacionais (BR) em rust.
 
-[![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br) &bull; [![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE) &bull; [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador) &bull; [![API](https://docs.rs/validador-br/badge.svg)](https://docs.rs/validador)
+[![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br) &bull; [![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE) &bull; [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; [![API](https://docs.rs/validador-br/badge.svg)](https://docs.rs/validador)
 
 ## Documentos implementados
 
