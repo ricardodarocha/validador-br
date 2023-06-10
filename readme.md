@@ -78,6 +78,10 @@ let cpf_string = String::from("133.976.410-55");
 if Cpf(cpf_string.as_str()).validar() {..}
 ```
 
+## Change log
+
+Consulte o [change log](changelog.md) para mais informações.
+
 ## Licença
 
 **validador-br** é um software Open Source [licenciado pelo MIT](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE)
