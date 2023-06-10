@@ -1,19 +1,5 @@
-/// Implementa validador para diversos tipos de documentos nacionais do Brasil.
-/// _Documentos implementados:_
-/// ```rust
-/// pub struct Cpf(pub &'static str);
-/// pub struct Cnpj(pub &'static str);
-/// pub struct CartaoCredito(pub &'static str);
-/// pub struct TituloEleitor(pub &'static str);
-/// pub struct Cnh(pub &'static str);
-/// pub struct Rg(pub &'static str);
-/// pub struct Pis(pub &'static str);
-/// ```
-    
 pub mod alfa {
     /// Define algumas funções básicas como `módulo_11` e `onze_menos_mod11`
-
-    /// Calcula o módulo 11 de uma soma qualquer
     pub fn mod_11(value: u32) -> usize {
         match value % 11 {
             10 => 0,
@@ -45,7 +31,7 @@ pub mod gama {
     /// Definimos um método genérico para calcular o dígito verificador de um doc, recebendo como parâmetro um vetor com os multiplicadores
     /// Este método **não** calculará mod 11 automaticamente, devendo ser passada por parâmetro uma função ou closure para realizar a verificação 
     ///```rust
-    /// # use vdoc::gama::calc_digito;
+    /// # use validador_br::gama::calc_digito;
     ///assert!(calc_digito(vec![9, 5, 8, 7], vec![2, 3, 4, 5], |x| x % 10) == 0);
     ///```
     
@@ -167,7 +153,7 @@ pub mod validador {
             (odd_sum + even_sum) % 10 == 0
         }
     }
-    // 00435687 09-06
+    
     impl Validador for TituloEleitor {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![2, 3, 4, 5, 6, 7, 8, 9];

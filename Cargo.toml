@@ -2,8 +2,13 @@
 name = "validador-br"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Ricardo da Rocha <ricardodarocha@hotmail.com>"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+description = "Validador para diversos documentos nacionais do Brasil (BR). Implementa o cálculo do dígito verificador para diversos tipos de documentos nacionais do Brasil **Cpf**, **Cnpj**, **CartaoCredito**, **TituloEleitor**, **Cnh**, **Rg**, **Pis**; Em breve implementados novos documentos **Ie** **Im** **Inss** **Renavam**"
+documentation = "https://docs.rs/validador_br"
+keywords = ["validador", "validate"]
+repository = "https://github.com/ricardodarocha/validador-br/"
 
 [lib]
 
