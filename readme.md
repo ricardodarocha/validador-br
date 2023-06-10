@@ -20,20 +20,21 @@ struct Ie(Uf, &str); ❌
 
 ## Roadmap
 
-- Implementar os documentos mais comuns. ✅
-- Ignora caracteres especiais, espaços e pontuações. ✅
+- Implementar os documentos mais comuns ✅
+- Ignora caracteres especiais, espaços e pontuações ✅
+- Emitir um erro `panic!` caso o número de dígitos esteja incorreto ✅
 - Valida antecipadamente a quantidade de dígitos numéricos. `000.000.00_.XX` ❌
-- Analisas repetições de dígitos como `111.111.111-11` ou `000.000.000-00`. ❌
-- Validar inscrição estadual de cada estado. ❌
-- Implementar novos tipos de documentos. ❌
+- Analisar repetições de dígitos como `111.111.111-11` ou `000.000.000-00` ❌
+- Validar inscrição estadual de cada estado ❌
+- Implementar novos tipos de documentos ❌
 
 ## Instalação
 
-Adicione essa dependência no seu `Cargo.toml`:
+Adicione a dependência ao seu `Cargo.toml`:
 
 ```toml
 [dependencies]
-validador-br = "0.1"
+validador-br = "0.1.2"
 ```
 
 ## Uso básico
@@ -59,7 +60,7 @@ Cnh("25524893033").validar();
 use validador_br::validador::*;
 
 fn main() {
-    let cpf_list = [&"133.976.410-55", "922.261.830-00", "922.261.830-01", "218.571.960-23"];
+    let cpf_list = [&"133.976.410-55", &"922.261.830-00", &"922.261.830-01", &"218.571.960-23"];
     for num in cpf_list {
         if Cpf(num).validar() {
             println!("{} ✅", num)
@@ -68,6 +69,13 @@ fn main() {
         }
     }
 }
+```
+
+## Utilizando Strings dinâmicas
+
+```rust
+let cpf_string = String::from("133.976.410-55");
+if Cpf(cpf_string.as_str()).validar() {..}
 ```
 
 ## Licença
