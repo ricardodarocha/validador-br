@@ -53,6 +53,23 @@ Cnh("25524893033").validar();
 
 ```
 
+## Validando uma lista de cpfs
+
+```rust
+use validador_br::validador::*;
+
+fn main() {
+    let cpf_list = [&"133.976.410-55", "922.261.830-00", "922.261.830-01", "218.571.960-23"];
+    for num in cpf_list {
+        if Cpf(num).validar() {
+            println!("{} ✅", num)
+        } else {
+            println!("{} ❌", num)
+        }
+    }
+}
+```
+
 ## Licença
 
 **validador-br** é um software Open Source [licenciado pelo MIT](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE)
