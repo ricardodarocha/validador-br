@@ -1,9 +1,10 @@
 # Changelog
+
 Qualquer alteração notável deve ser documentada neste arquivo
 
 ## [0.1.1] - 2023-06-10
 
-- Mudança de lifetimes para aceitar Strings dinâmicas 
+- Mudança de lifetimes para aceitar Strings dinâmicas
 
 ```diff
 - pub struct Cpf(pub &'static str);
@@ -19,4 +20,4 @@ if Cpf(numero).validar() {..}
 
 ## [0.1.0] - 2023-06-10
 
-- Primeira versão experimental 
+- Primeira versão experimental
