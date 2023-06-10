@@ -1,0 +1,5 @@
+/target
+/doc
+/debug
+/Cargo.lock
+/.history
