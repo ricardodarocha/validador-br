@@ -9,7 +9,7 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 
 ```diff
 + pub struct Cpf(pub &'static str);
-+ pub struct Cpf<'data>(pub &'data str);
+- pub struct Cpf<'data>(pub &'data str);
 ```
 
 O código abaixo passa a funcionar
