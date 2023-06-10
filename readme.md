@@ -39,16 +39,16 @@ validador-br = "0.1"
 ## Uso básico
 
 ```rust
-use validador_br::{Cpf, Cnh};
+use validador_br::validador::*;
 
 
-Cpf("255.248.930-33").validate();
+Cpf("255.248.930-33").validar();
 // ✅ true 
 
-Cpf("25524893033").validate();
+Cpf("25524893033").validar();
 // ✅ true
 
-Cnh("25524893033").validate();
+Cnh("25524893033").validar();
 // ❌ false
 
 ```
