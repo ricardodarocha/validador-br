@@ -342,75 +342,75 @@ mod tests {
 
     #[test]
     fn test_mod_11() {
-        fn test(input: u32, output: usize) {
-            let result = mod_11(input);
-            assert_eq!(result, output);
-        }
-
-        test(810, 7);
-        test(820, 6);
-        test(830, 5);
-        test(840, 4);
-        test(850, 3);
-        test(860, 2);
-        test(870, 1);
-        test(880, 0);
-        test(890, 0);
-        test(900, 9);
-        test(910, 8);
-        test(920, 7);
-        test(930, 6);
-        test(940, 5);
-        test(950, 4);
-        test(960, 3);
-        test(970, 2);
-        test(980, 1);
-        test(990, 0);
-        test(1000, 0);
-        test(1010, 9);
-        test(1020, 8);
-        test(1030, 7);
-        test(1040, 6);
-        test(1050, 5);
-        test(1060, 4);
-        test(1070, 3);
-        test(1080, 2);
-        test(2510, 2);
+        let test_data: [(u32, usize); 29] = [
+            (810, 7),
+            (820, 6),
+            (830, 5),
+            (840, 4),
+            (850, 3),
+            (860, 2),
+            (870, 1),
+            (880, 0),
+            (890, 0),
+            (900, 9),
+            (910, 8),
+            (920, 7),
+            (930, 6),
+            (940, 5),
+            (950, 4),
+            (960, 3),
+            (970, 2),
+            (980, 1),
+            (990, 0),
+            (1000, 0),
+            (1010, 9),
+            (1020, 8),
+            (1030, 7),
+            (1040, 6),
+            (1050, 5),
+            (1060, 4),
+            (1070, 3),
+            (1080, 2),
+            (2510, 2),
+        ];
+    
+        let test_results: Vec<bool> = test_data
+            .iter()
+            .map(|&(input, expected_output)| mod_11(input) == expected_output)
+            .collect();
+        assert!(test_results.iter().all(|&test_passed| test_passed));
     }
-
+    
     #[test]
     fn test_calc_digito() {
-        fn test(input: &str, multiplicadores: Vec<u32>) {
-            let split_size = multiplicadores.len();
-            let mut digitos = somente_digitos(input, split_size + 1);
-            let output = digitos.split_off(split_size);
-            let result = calc_digito(digitos, multiplicadores, |x| mod_11(10 * x) as u32);
+        
+        fn _test(input: &str, multiplicadores: Vec<u32>) {
+            let split_size: usize = multiplicadores.len();
+            let mut digitos: Vec<u32> = somente_digitos(input, split_size + 1);
+            let output: Vec<u32> = digitos.split_off(split_size);
+            let result: u32 = calc_digito(digitos, multiplicadores, |x: u32| mod_11(10 * x) as u32);
             assert_eq!(result, output[0]);
         }
 
-        test("1556748620", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("0155674862", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("26.911.358-70", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("326.911.358-7", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("883.926.778-6", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("83.926.778-62", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-        test("0155674862", vec![10, 9, 8, 7, 6, 5, 4, 3, 2]);
-    }
-    #[test]
-    fn test_somente_digitos() {
-        fn test(input: &str, output: Vec<u32>) {
-            let result = somente_digitos(input, input.len());
-            assert_eq!(result, output);
+        let test_all: Vec<&str> = vec![
+            "1556748620",
+            "0155674862",
+            "26.911.358-70",
+            "326.911.358-7",
+            "883.926.778-6",
+            "83.926.778-62",
+            "0155674862"
+        ];
+
+        fn gerar_multiplicadores(start: u32, end: u32) -> Vec<u32> {
+            (start..=end).rev().collect()
         }
 
-        test(&"0", vec![0]);
-        test(&"1", vec![1]);
-        test(&"5", vec![5]);
-        test(&"9", vec![9]);
-        test(&"10", vec![1, 0]);
-        test(&"123", vec![1, 2, 3]);
-        test(&"1.23-0", vec![1, 2, 3, 0]);
-        test(&"1.23/001-0", vec![1, 2, 3, 0, 0, 1, 0]);
+        let multiplicadores: Vec<u32> = gerar_multiplicadores(2, 10);
+
+        for input in &test_all {
+            _test(input, multiplicadores.clone());
+        }
     }
     #[test]
     fn test_completa_esquerda() {
@@ -453,55 +453,106 @@ mod tests {
     }
 
     #[test]
+    fn test_somente_digitos() {
+        let tests: Vec<(&str, Vec<u32>)> = vec![
+            ("0", vec![0]),
+            ("1", vec![1]),
+            ("5", vec![5]),
+            ("9", vec![9]),
+            ("10", vec![1, 0]),
+            ("123", vec![1, 2, 3]),
+            ("1.23-0", vec![1, 2, 3, 0]),
+            ("1.23/001-0", vec![1, 2, 3, 0, 0, 1, 0]),
+        ];
+    
+        for (input, expected) in tests {
+            let result = somente_digitos(input, input.len());
+            assert_eq!(result, expected);
+        }
+    }
+    
+    
+
+    #[test]
     fn test_valid_cpf() {
-        assert!(Cpf(&"085.668.830-47").validar());
-        assert!(Cpf(&"712.926.512-45").validar());
-        assert!(Cpf(&"974.749.266-01").validar());
-        assert!(Cpf(&"201.859.154-18").validar());
-        assert!(Cpf(&"274.047.203-03").validar());
-        assert!(Cpf(&"864.148.641-02").validar());
+        let cpfs: Vec<&str> = vec![
+            "085.668.830-47",
+            "712.926.512-45",
+            "974.749.266-01",
+            "201.859.154-18",
+            "274.047.203-03",
+            "864.148.641-02"
+        ];
+
+        for cpf in &cpfs {
+            assert!(Cpf(cpf).validar());
+        }
     }
 
     #[test]
     fn test_valid_cnpj() {
-        assert!(Cnpj(&"14.572.457.0001-85").validar());
-        assert!(Cnpj(&"76.553.412/0001-10").validar());
-        assert!(Cnpj(&"45.184.338/0001-89").validar());
-        assert!(Cnpj(&"37.645.328/0001-75").validar());
-        assert!(Cnpj(&"55.131.839/0001-50").validar());
-        assert!(Cnpj(&"44.122.045/0001-04").validar());
-        assert!(Cnpj(&"41.768.737/0001-36").validar());
-        assert!(Cnpj(&"89.267.553/0001-19").validar());
-        assert!(Cnpj(&"40.357.317/0001-02").validar());
-        assert!(Cnpj(&"46.922.782/0001-17").validar());
-        assert!(Cnpj(&"86.107.547/0001-06").validar());
+        let cnpjs: Vec<&str> = vec![
+            "14.572.457.0001-85",
+            "76.553.412/0001-10",
+            "45.184.338/0001-89",
+            "37.645.328/0001-75",
+            "55.131.839/0001-50",
+            "44.122.045/0001-04",
+            "41.768.737/0001-36",
+            "89.267.553/0001-19",
+            "40.357.317/0001-02",
+            "46.922.782/0001-17",
+            "86.107.547/0001-06"
+        ];
+
+        for cnpj in &cnpjs {
+            assert!(Cnpj(cnpj).validar());
+        }
     }
 
     #[test]
     fn test_valid_cc() {
-        assert!(CartaoCredito(&"5312 8338 4531 6765").validar());
-        assert!(CartaoCredito(&"5440 4970 4224 4678").validar());
-        assert!(CartaoCredito(&"6011 1122 7847 6822").validar());
-        assert!(CartaoCredito(&"3479 467653 71543").validar());
-        assert!(CartaoCredito(&"2014 4799698 0942").validar());
-        assert!(CartaoCredito(&"6062 8271 2873 9719").validar());
+        let cards: Vec<&str> = vec![
+            "5312 8338 4531 6765",
+            "5440 4970 4224 4678",
+            "6011 1122 7847 6822",
+            "3479 467653 71543",
+            "2014 4799698 0942",
+            "6062 8271 2873 9719"
+        ];
+
+        for credit_card in &cards {
+            assert!(CartaoCredito(credit_card).validar());
+        }
     }
 
     #[test]
     fn test_valid_titulo_eleitor() {
-        assert!(TituloEleitor(&"00435687 09-06").validar());
-        assert!(TituloEleitor(&"781613810175").validar());
-        assert!(TituloEleitor(&"8645582519 29").validar());
-        assert!(TituloEleitor(&"272.20357 20-20").validar());
+        let tittles: Vec<&str> = vec![
+            "00435687 09-06",
+            "781613810175",
+            "8645582519 29",
+            "272.20357 20-20"
+        ];
+
+        for tittle in &tittles {
+            assert!(TituloEleitor(tittle).validar());
+        }
     }
 
     #[test]
     fn test_valid_cnh() {
-        assert!(Cnh(&"81814756744").validar());
-        assert!(Cnh(&"28851304391").validar());
-        assert!(Cnh(&"72887311600").validar());
-        assert!(Cnh(&"86033265137").validar());
-        assert!(Cnh(&"40386768760").validar());
+        let cnhs: Vec<&str> = vec![
+            "81814756744",
+            "28851304391",
+            "72887311600",
+            "86033265137",
+            "40386768760"
+        ];
+
+        for cnh in &cnhs {
+            assert!(Cnh(cnh).validar());
+        }
     }
 
     #[test]
@@ -521,12 +572,18 @@ mod tests {
 
     #[test]
     fn test_valid_rg() {
-        assert!(Rg(&"14.176.381-4").validar());
-        assert!(Rg(&"28.530.378-8").validar());
-        assert!(Rg(&"28.346.393-4").validar());
-        assert!(Rg(&"39.371.494-9").validar());
-        assert!(Rg(&"24.657.777-0").validar());
-        assert!(Rg(&"17.227.771-1").validar());
+        let rgs: Vec<&str> = vec![
+            "14.176.381-4",
+            "28.530.378-8",
+            "28.346.393-4",
+            "39.371.494-9",
+            "24.657.777-0",
+            "17.227.771-1"
+        ];
+
+        for rg in &rgs {
+            assert!(Rg(rg).validar());
+        }
     }
 
     #[test]
@@ -585,8 +642,14 @@ mod tests {
 
     #[test]
     fn test_valid_pis() {
-        assert!(Pis(&"608.37951.54-6").validar());
-        assert!(Pis(&"317.73180.80-0").validar());
+        let pises: Vec<&str> = vec![
+            "608.37951.54-6",
+            "317.73180.80-0"
+        ];
+
+        for pis in &pises {
+            assert!(Pis(pis).validar());
+        }
     }
 
     #[test]
