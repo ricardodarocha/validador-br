@@ -1,16 +1,24 @@
-# validador-br
-
 _Brazilian document numbers validator written in rust_  
 Validador para diversos documentos nacionais (BR) em rust.
 
 [![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br) &bull; 
 [![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE) &bull; 
-<!-- [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; -->
 [![API](https://docs.rs/validador-br/badge.svg)](https://docs.rs/validador-br)
+<!-- [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; -->
 
-## Documentos implementados
+## [0.1.2] - 2023-06-11
 
-```rust
+- [x] Adicionados novos tipos de documentos
+
+```rust diff ignore
++ pub struct Cns<'data>(pub &'data str);
++ pub struct Renavam<'data>(pub &'data str);
++ pub struct CodigoBarrasGs1<'data>(pub &'data str); // EAN8 EAN13 GTIN08..18
+```
+
+## [0.1.1] - 2023-06-10
+
+```rust ignore
 struct Cpf(&str); ✔
 struct Cnpj(&str); ✔
 struct CartaoCredito(&str); ✔
@@ -20,6 +28,8 @@ struct Rg(&str); ✔ ⚠ ///verificar a legislação em seu Estado
 struct Pis(&str); ✔
 struct Ie(Uf, &str); ❌
 ```
+
+Consulte o [change log](https://github.com/ricardodarocha/validador-br/blob/master/changelog.md) para mais informações.
 
 ## Roadmap
 
@@ -45,15 +55,11 @@ validador-br = "0.1.2"
 ```rust
 use validador_br::validador::*;
 
+Cpf("255.248.930-33").validar(); // ✅ true 
 
-Cpf("255.248.930-33").validar();
-// ✅ true 
+Cpf("25524893033").validar();// ✅ true
 
-Cpf("25524893033").validar();
-// ✅ true
-
-Cnh("25524893033").validar();
-// ❌ false
+Cnh("25524893033").validar();// ❌ false
 
 ```
 
@@ -77,13 +83,10 @@ fn main() {
 ## Utilizando Strings dinâmicas
 
 ```rust
+# use validador_br::validador::{Validador, Cpf};
 let cpf_string = String::from("133.976.410-55");
-if Cpf(cpf_string.as_str()).validar() {..}
+if Cpf(cpf_string.as_str()).validar() {}
 ```
-
-## Change log
-
-Consulte o [change log](changelog.md) para mais informações.
 
 ## Licença
 

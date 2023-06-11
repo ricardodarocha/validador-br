@@ -1,3 +1,5 @@
+#![doc=include_str!("../README.md")]
+
 pub mod alfa {
     /// Define algumas funções básicas como `módulo_11` e `onze_menos_mod11`
     pub fn mod_11(value: u32) -> usize {
@@ -29,12 +31,12 @@ pub mod gama {
     /// * IE os multiplicadores variam de estado para estado sendo dv1 = os dígitos [0..n-1] e dv2 = os dígitos [0..n]
 
     /// Definimos um método genérico para calcular o dígito verificador de um doc, recebendo como parâmetro um vetor com os multiplicadores
-    /// Este método **não** calculará mod 11 automaticamente, devendo ser passada por parâmetro uma função ou closure para realizar a verificação 
+    /// Este método **não** calculará mod 11 automaticamente, devendo ser passada por parâmetro uma função ou closure para realizar a verificação
     ///```rust
     /// # use validador_br::gama::calc_digito;
     ///assert!(calc_digito(vec![9, 5, 8, 7], vec![2, 3, 4, 5], |x| x % 10) == 0);
     ///```
-    
+
     pub fn calc_digito(
         digitos: Vec<u32>,
         multiplicadores: Vec<u32>,
@@ -65,12 +67,21 @@ pub mod gama {
     }
 
     /// 326.911.358-70 => \[3,2,6,9,1,1,3,5,8,7,0\]
-    pub fn somente_digitos(dor: &str, n: usize) -> Vec<u32> {
-        dor.chars()
+    pub fn somente_digitos(doc: &str, n: usize) -> Vec<u32> {
+        doc.chars()
             .filter(|c| c.is_ascii_digit())
             .map(|x| x.to_digit(10).unwrap())
             .take(n)
             .collect()
+    }
+
+    pub fn completa_esquerda(numero: &mut Vec<u32>, n: usize) {
+        if numero.len() < n {
+            for _ in 0..(n - numero.len()) {
+                numero.insert(0, 0);
+            }
+        };
+        // println!("{:?}", numero);
     }
 }
 pub mod validador_ie {
@@ -79,16 +90,34 @@ pub mod validador_ie {
 
 pub mod validador {
     use crate::alfa::{mod_11, onze_menos_mod11};
-    use crate::gama::{calc_digito, calc_digito_mod11, somente_digitos};
+    use crate::gama::{calc_digito, calc_digito_mod11, completa_esquerda, somente_digitos};
     use crate::validador_ie::IeUf;
 
+    /// Cadastro de Pessoa Física
     pub struct Cpf<'data>(pub &'data str);
+    /// Cadastro de Pessoa Jurídica
     pub struct Cnpj<'data>(pub &'data str);
+    /// Inscrição Estadual
     pub struct Ie<'data>(pub IeUf<'data>);
+    /// Cartão de Crédito
     pub struct CartaoCredito<'data>(pub &'data str);
+    /// Título de Eleitor
     pub struct TituloEleitor<'data>(pub &'data str);
+    /// Carteira Nacional de Habilitação (Motorista)
     pub struct Cnh<'data>(pub &'data str);
+    /// Registro Nacional de Veículos Automotores
+    pub struct Renavam<'data>(pub &'data str);
+    /// Registro Geral, Cédula de Identidade
     pub struct Rg<'data>(pub &'data str);
+    /// Cartão Nacional de Saúde
+    pub struct Cns<'data>(pub &'data str);
+    pub enum TipoCns<'data> {
+        Cns(Cns<'data>),
+        Provisorio(Pis<'data>),
+    }
+    /// Código de Barras Gs1 7890300584651
+    pub struct CodigoBarrasGs1<'data>(pub &'data str);
+    /// Programa de Integração Social, PIS, PASEP, NIT
     pub struct Pis<'data>(pub &'data str);
 
     pub trait Validador {
@@ -153,7 +182,7 @@ pub mod validador {
             (odd_sum + even_sum) % 10 == 0
         }
     }
-    
+
     impl Validador for TituloEleitor<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![2, 3, 4, 5, 6, 7, 8, 9];
@@ -206,6 +235,17 @@ pub mod validador {
         }
     }
 
+    impl Validador for Renavam<'_> {
+        fn validar(&self) -> bool {
+            let multiplicadores1 = vec![3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+            let mut digitos = somente_digitos(self.0, 11);
+            completa_esquerda(&mut digitos, 11);
+            let dv1 = digitos.split_off(10);
+
+            dv1[0] == calc_digito(digitos, multiplicadores1, onze_menos_mod11)
+        }
+    }
+
     impl Validador for Rg<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![2, 3, 4, 5, 6, 7, 8, 9];
@@ -217,13 +257,75 @@ pub mod validador {
         }
     }
 
+    impl Validador for Cns<'_> {
+        fn validar(&self) -> bool {
+            fn valida_1_2(numero: &str) -> bool {
+                let multiplicadores1 = vec![15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5];
+                let mut digitos = somente_digitos(numero, 15);
+                let dv = digitos.split_off(11);
+                let mut soma = calc_digito(digitos, multiplicadores1, |x| x);
+                let resto = soma % 11;
+                let calculo = 11 - resto;
+                let mut digito_anterior = 0;
+                let calculo = if calculo == 11 {
+                    0
+                } else if calculo == 10 {
+                    soma += 2;
+                    let resto = soma % 11;
+                    digito_anterior += 1;
+                    11 - resto
+                } else {
+                    calculo
+                };
+                println!("{:?}", calculo);
+
+                //retorno
+                    dv == vec![0, 0, digito_anterior, calculo]
+                }
+            fn valida_7_8_9(numero: &str) -> bool {
+                let multiplicadores1 = vec![15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+                let mut digitos = somente_digitos(numero, 15);
+
+                completa_esquerda(&mut digitos, 15);
+                let calculo = calc_digito(digitos, multiplicadores1, |x| x % 11);
+                calculo == 0
+            }
+
+            let primeiro_digito = somente_digitos(self.0, 1);
+            match primeiro_digito.first() {
+                Some(1) | Some(2) => valida_1_2(self.0),
+                Some(7) | Some(8) | Some(9) => valida_7_8_9(self.0),
+                _ => false,
+            }
+        }
+    }
+
+    /// Se for número provisório usa o número do Pis
+    impl Validador for TipoCns<'_> {
+        fn validar(&self) -> bool {
+            match self {
+                TipoCns::Cns(value) => value.validar(),
+                TipoCns::Provisorio(value) => value.validar(),
+            }
+        }
+    }
+
+    impl Validador for CodigoBarrasGs1<'_> {
+        fn validar(&self) -> bool {
+            let multiplicadores1 = vec![3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3];
+            let mut digitos = somente_digitos(self.0, 18);
+            completa_esquerda(&mut digitos, 18);
+            let dv1 = &digitos.split_off(17);
+            let digitos_verificadores = calc_digito(digitos, multiplicadores1, |x| {(x/10+1)*10-x});
+            digitos_verificadores == dv1[0]
+        }
+    }
+
     impl Validador for Pis<'_> {
         fn validar(&self) -> bool {
             let multiplicadores1 = vec![3,2,9,8,7,6,5,4,3,2];
             let mut digitos = somente_digitos(self.0, 11);
             let dv1 = digitos.split_off(10);
-            println!("{:?}", dv1);
-            println!("{:?}", digitos);
 
             dv1[0] == calc_digito(digitos, multiplicadores1, onze_menos_mod11)
         }
@@ -233,8 +335,10 @@ pub mod validador {
 #[cfg(test)]
 mod tests {
     use crate::alfa::mod_11;
-    use crate::gama::{calc_digito, somente_digitos};
-    use crate::validador::{CartaoCredito, Cnh, Cnpj, Cpf, Pis, Rg, TituloEleitor, Validador};
+    use crate::gama::{calc_digito, completa_esquerda, somente_digitos};
+    use crate::validador::{
+        CartaoCredito, Cnh, Cnpj, Cpf, Cns, Pis, Renavam, Rg, TituloEleitor, Validador, CodigoBarrasGs1,
+    };
 
     #[test]
     fn test_mod_11() {
@@ -308,6 +412,45 @@ mod tests {
         test(&"1.23-0", vec![1, 2, 3, 0]);
         test(&"1.23/001-0", vec![1, 2, 3, 0, 0, 1, 0]);
     }
+    #[test]
+    fn test_completa_esquerda() {
+        fn test_0123() {
+            let mut value = vec![1, 2, 3];
+            completa_esquerda(&mut value, 4);
+            assert!(value.clone() == vec![0, 1, 2, 3]);
+        }
+        fn test_0007522413915() {
+            let mut value = vec![7, 5, 2, 2, 4, 1, 3, 9, 1, 5];
+            completa_esquerda(&mut value, 13);
+            assert!(value.clone() == vec![0, 0, 0, 7, 5, 2, 2, 4, 1, 3, 9, 1, 5]);
+        }
+        fn test_789() {
+            let mut value = vec![7, 8, 9];
+            completa_esquerda(&mut value, 3);
+            assert!(value.clone() == vec![7, 8, 9]);
+        }
+        fn test_7890000() {
+            let mut value = vec![7, 8, 9, 0, 0, 0, 0];
+            completa_esquerda(&mut value, 7);
+            assert!(value.clone() == vec![7, 8, 9, 0, 0, 0, 0]);
+        }
+        fn test_0078900() {
+            let mut value = vec![0, 0, 7, 8, 9, 0, 0];
+            completa_esquerda(&mut value, 8);
+            assert!(value.clone() == vec![0, 0, 0, 7, 8, 9, 0, 0]);
+        }
+        fn test_x13915() {
+            let mut value = vec![0, 0, 0, 7, 5, 2, 2, 4, 1, 3, 9, 1, 5];
+            completa_esquerda(&mut value, 5);
+            assert!(value.clone() == vec![0, 0, 0, 7, 5, 2, 2, 4, 1, 3, 9, 1, 5]);
+        }
+        test_0123();
+        test_0007522413915();
+        test_789();
+        test_7890000();
+        test_0078900();
+        test_x13915();
+    }
 
     #[test]
     fn test_valid_cpf() {
@@ -362,6 +505,21 @@ mod tests {
     }
 
     #[test]
+    fn test_valid_renavam() {
+        assert!(Renavam(&"55879397036").validar());
+        assert!(Renavam(&"31264299604").validar());
+        assert!(Renavam(&"26739874261").validar());
+        assert!(Renavam(&"18946231365").validar());
+        assert!(Renavam(&"0269.417.0174").validar());
+        assert!(Renavam(&"2694170174").validar());
+        assert!(Renavam(&"61631697260").validar());
+        assert!(Renavam(&"03340530540").validar());
+        assert!(Renavam(&"3340530540").validar());
+        assert!(Renavam(&"891353364").validar());
+        assert!(Renavam(&"MG48.101 477-2").validar());
+    }
+
+    #[test]
     fn test_valid_rg() {
         assert!(Rg(&"14.176.381-4").validar());
         assert!(Rg(&"28.530.378-8").validar());
@@ -372,8 +530,89 @@ mod tests {
     }
 
     #[test]
+    fn test_valid_cns() {
+        assert!(Cns(&"184184462180018").validar());
+        assert!(Cns(&"140387139970001").validar());
+        assert!(Cns(&"178095857640000").validar());
+        assert!(Cns(&"962183461450002").validar());
+        assert!(Cns(&"189444452860006").validar());
+        assert!(Cns(&"107254212750009").validar());
+        assert!(Cns(&"233954785680009").validar());
+        assert!(Cns(&"163273888290018").validar());
+        assert!(Cns(&"207066918130005").validar());
+        assert!(Cns(&"852892869900003").validar());
+        assert!(Cns(&"720641595950005").validar());
+        assert!(Cns(&"294490488830009").validar());
+        assert!(Cns(&"864468656740001").validar());
+        assert!(Cns(&"171034974690006").validar());
+        assert!(Cns(&"111059690060009").validar());
+        assert!(Cns(&"734512532720004").validar());
+        assert!(Cns(&"274579054310008").validar());
+        assert!(Cns(&"244688881450002").validar());
+        assert!(Cns(&"701996683420003").validar());
+        assert!(Cns(&"118934023320006").validar());
+        assert!(Cns(&"220780617770000").validar());
+        assert!(Cns(&"213826540730001").validar());
+        assert!(Cns(&"281440564810008").validar());
+        assert!(Cns(&"241293038630002").validar());
+        assert!(Cns(&"186487812210006").validar());
+        assert!(Cns(&"269472194400008").validar());
+        assert!(Cns(&"816685676560004").validar());
+        assert!(Cns(&"188643188220000").validar());
+        assert!(Cns(&"703828335240002").validar());
+        assert!(Cns(&"858681602500018").validar());
+        assert!(Cns(&"181068087580004").validar());
+        assert!(Cns(&"169391037690002").validar());
+        assert!(Cns(&"216015350640002").validar());
+        assert!(Cns(&"855561772500007").validar());
+        assert!(Cns(&"171581061380018").validar());
+        assert!(Cns(&"141674939420009").validar());
+        assert!(Cns(&"764078680590003").validar());
+        assert!(Cns(&"272101781280001").validar());
+        assert!(Cns(&"792869204500009").validar());
+        assert!(Cns(&"284830935640009").validar());
+        assert!(Cns(&"149261133080003").validar());
+        assert!(Cns(&"851068307450018").validar());
+        assert!(Cns(&"158482206870007").validar());
+        assert!(Cns(&"190191624780009").validar());
+        assert!(Cns(&"871946533020007").validar());
+        assert!(Cns(&"839286321970004").validar());
+        assert!(Cns(&"268240267290004").validar());
+        assert!(Cns(&"257633494510009").validar());
+        assert!(Cns(&"191619409830006").validar());
+        assert!(Cns(&"282467243710003").validar());
+    }
+
+    #[test]
     fn test_valid_pis() {
         assert!(Pis(&"608.37951.54-6").validar());
         assert!(Pis(&"317.73180.80-0").validar());
+    }
+
+    #[test]
+    fn test_valid_codigobar() {
+        //EAN 8
+        assert!(CodigoBarrasGs1(&"7891234-2").validar());
+        //EAN 11
+        assert!(CodigoBarrasGs1(&"12345 6000-12").validar());
+        //EAN 12
+        assert!(CodigoBarrasGs1(&"614141007349").validar());
+        assert!(CodigoBarrasGs1(&"811571013579").validar());
+        //EAN 13
+        assert!(CodigoBarrasGs1(&"4012345678901").validar());
+        assert!(CodigoBarrasGs1(&"5901234123457").validar()); 
+        assert!(CodigoBarrasGs1(&"1234567 890128").validar()); 
+        assert!(CodigoBarrasGs1(&"7350053850033").validar()); 
+        assert!(CodigoBarrasGs1(&"1312345123456 6").validar());
+        assert!(CodigoBarrasGs1(&"789030058465-1").validar());
+        assert!(CodigoBarrasGs1(&"789123456789-5").validar());
+        assert!(CodigoBarrasGs1(&"789100031550-7").validar());
+        //EAN 14
+        assert!(CodigoBarrasGs1(&"1789835741001-2").validar());
+        assert!(CodigoBarrasGs1(&"1 7891234 12345 6").validar());
+        assert!(CodigoBarrasGs1(&"18496578214564").validar());
+        //EAN 18
+        assert!(CodigoBarrasGs1(&"376104250021234569").validar());
+        assert!(CodigoBarrasGs1(&"376.10425002.123456-9").validar());
     }
 }
