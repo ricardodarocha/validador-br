@@ -274,12 +274,9 @@ mod tests {
             .iter()
             .map(|&(input, expected_output)| mod_11(input) == expected_output)
             .collect();
-    
         assert!(test_results.iter().all(|&test_passed| test_passed));
     }
     
-
-
     #[test]
     fn test_calc_digito() {
         
@@ -304,14 +301,14 @@ mod tests {
         fn gerar_multiplicadores(start: u32, end: u32) -> Vec<u32> {
             (start..=end).rev().collect()
         }
-    
+
         let multiplicadores: Vec<u32> = gerar_multiplicadores(2, 10);
-    
+
         for input in &test_all {
             _test(input, multiplicadores.clone());
         }
-        
     }
+
     #[test]
     fn test_somente_digitos() {
         let tests: Vec<(&str, Vec<u32>)> = vec![
@@ -368,7 +365,6 @@ mod tests {
         for cnpj in &cnpjs {
             assert!(Cnpj(cnpj).validar());
         }
-
     }
 
     #[test]
