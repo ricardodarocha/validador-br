@@ -1,10 +1,13 @@
-_Brazilian document numbers validator written in rust_  
-Validador para diversos documentos nacionais (BR) em rust.
+![](https://media.licdn.com/dms/image/sync/D4D27AQGMP3vWqjmmhw/articleshare-shrink_1280_800/0/1686427898640?e=1687125600&v=beta&t=LLO4T-AbzVtT-YThIGw2IrCLms5NQRI3-sm7yJcIupg)
+
+**Validador para diversos documentos nacionais (BR) em rust**  
 
 [![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br) &bull; 
 [![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE) &bull; 
 [![API](https://docs.rs/validador-br/badge.svg)](https://docs.rs/validador-br)
 <!-- [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; -->
+
+_Brazilian document numbers validator written in rust_   
 
 ## [0.1.2] - 2023-06-11
 
