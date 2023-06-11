@@ -1,13 +1,21 @@
-![](https://media.licdn.com/dms/image/sync/D4D27AQGMP3vWqjmmhw/articleshare-shrink_1280_800/0/1686427898640?e=1687125600&v=beta&t=LLO4T-AbzVtT-YThIGw2IrCLms5NQRI3-sm7yJcIupg)
+<div align="center">
+  <h1>💚💙💛 Validador-br</h1>
 
-**Validador para diversos documentos nacionais (BR) em rust**  
+  <i>A Brazilian document numbers validator written in rust</i>
+  <h3>Um validador para diversos documentos nacionais (BR) em rust </h3>
+  
+  <img src="https://media.licdn.com/dms/image/sync/D4D27AQGMP3vWqjmmhw/articleshare-shrink_1280_800/0/1686427898640?e=1687125600&v=beta&t=LLO4T-AbzVtT-YThIGw2IrCLms5NQRI3-sm7yJcIupg"/>
 
-[![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br) &bull; 
-[![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE) &bull; 
+</div>
+
+[![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br)
+[![Crates.io](https://img.shields.io/crates/l/validador-br)](https://github.com/ricardodarocha/validador-br/blob/master/LICENSE)
 [![API](https://docs.rs/validador-br/badge.svg)](https://docs.rs/validador-br)
+[![Fórum de discussão](https://img.shields.io/github/issues/ricardodarocha/validador-br?label=tarefas)](https://github.com/ricardodarocha/validador-br/discussions)
 <!-- [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; -->
 
-_Brazilian document numbers validator written in rust_   
+[![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
+Dê a sua contribuição comentando, compartilhando ou realizando um pull request!
 
 ## [0.1.2] - 2023-06-11
 
