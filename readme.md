@@ -17,14 +17,19 @@
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
 Dê a sua contribuição comentando, compartilhando ou realizando um pull request!
 
+## [0.1.3] - 2023-06-12
+
+- [x] Implementado trait `try_from()` `try_into()`
+- [x] Os módulos foram separados em arquivos  
+
 ## [0.1.2] - 2023-06-11
 
 - [x] Adicionados novos tipos de documentos
 
-```rust diff ignore
-+ pub struct Cns<'data>(pub &'data str);
-+ pub struct Renavam<'data>(pub &'data str);
-+ pub struct CodigoBarrasGs1<'data>(pub &'data str); // EAN8 EAN13 GTIN08..18
+```rust ignore
+pub struct Cns<'data>(pub &'data str);
+pub struct Renavam<'data>(pub &'data str);
+pub struct CodigoBarrasGs1<'data>(pub &'data str); // EAN8 EAN13 GTIN08..18
 ```
 
 ## [0.1.1] - 2023-06-10
@@ -64,12 +69,22 @@ validador-br = "0.1.2"
 ## Uso básico
 
 ```rust
+use validador_br::types::{Cpf};
+
+let cpf = Cpf::try_from("085.668.830-47");
+match cpf {
+    Ok(cpf) => println!("{}✅", cpf.0),
+    Err(invalido) => panic!("{}", invalido)
+};
+```
+
+Também é possível usar o método `validar()` embora não seja recomendado.
+
+```rust
 use validador_br::validador::*;
-
+use validador_br::types::{Cpf, Cnh};
 Cpf("255.248.930-33").validar(); // ✅ true 
-
 Cpf("25524893033").validar();// ✅ true
-
 Cnh("25524893033").validar();// ❌ false
 
 ```
@@ -78,11 +93,12 @@ Cnh("25524893033").validar();// ❌ false
 
 ```rust
 use validador_br::validador::*;
+use validador_br::types::Cpf;
 
 fn main() {
     let cpf_list = [&"133.976.410-55", &"922.261.830-00", &"922.261.830-01", &"218.571.960-23"];
     for num in cpf_list {
-        if Cpf(num).validar() {
+        if Cpf::is_valid(num) {
             println!("{} ✅", num)
         } else {
             println!("{} ❌", num)
@@ -94,7 +110,8 @@ fn main() {
 ## Utilizando Strings dinâmicas
 
 ```rust
-# use validador_br::validador::{Validador, Cpf};
+# use validador_br::validador::*;
+# use validador_br::types::Cpf;
 let cpf_string = String::from("133.976.410-55");
 if Cpf(cpf_string.as_str()).validar() {}
 ```

@@ -2,6 +2,11 @@
 
 Qualquer alteração notável deve ser documentada neste arquivo
 
+## [0.1.3] - 2023-06-12
+
+- [x] Implementado trait `try_from()` `try_into()`
+- [x] Os módulos foram separados em arquivos  
+
 ## [0.1.2] - 2023-06-11
 
 - Adicionados novos tipos de documentos
