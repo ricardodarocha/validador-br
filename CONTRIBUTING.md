@@ -48,11 +48,11 @@ impl Validador for NovoDocumento<'_> {
     assert!(NovoDocumento::is_valid("2222222-22"));
 ```
 
-> Agora você está pronto para rodar o seu primeiro teste unitário antes de prosseguir.
+> Agora você está pronto para rodar o seu primeiro teste unitário antes de prosseguir  
+> O objetivo é ver o teste falhar; só depois iremos implementar o algoritmo do dígito verificador  
 > ```shell
 > cargo test test_validar_novo_documento
 > ```
-> O objetivo é ver o teste falhar; só depois iremos implementar o algoritmo do dígito verificador.
 
 **4)** Refatore o método `is_valid()` na unit _types.rs_ para implementar o método de validação do dígito verificador  
 ⚠ _**Não será aceita Pull Request sem execução do Teste Unitário**_
