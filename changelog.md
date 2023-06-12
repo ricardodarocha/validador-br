@@ -35,4 +35,4 @@ if Cpf(numero).validar() {..}
 
 ## [0.1.0] - 2023-06-10
 
-- Primeira versão experimental
+- Primeira versão publicada
