@@ -55,8 +55,7 @@ impl Validador for NovoDocumento<'_> {
 > O objetivo é ver o teste falhar; só depois iremos implementar o algoritmo do dígito verificador.
 
 **4)** Refatore o método `is_valid()` na unit _types.rs_ para implementar o método de validação do dígito verificador.
-
-⚠ **Não será aceita Pull Request sem execução do Teste Unitário**
+⚠ _**Não será aceita Pull Request sem execução do Teste Unitário**_
 
 _O exemplo a seguir retirado do documento **Pis**, que possui um algoritmo mais simples_
 
