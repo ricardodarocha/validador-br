@@ -15,7 +15,7 @@
 <!-- [![Build Status](https://travis-ci.com/ricardodarocha/validador-br.svg?branch=master)](https://travis-ci.com/ricardodarocha/validador-br) &bull; -->
 
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
-Dê a sua contribuição comentando, compartilhando ou realizando um pull request!
+[Contribua](CONTRIBUTING.md) comentando, compartilhando ou realizando um pull request!
 
 ## [0.1.3] - 2023-06-12
 
