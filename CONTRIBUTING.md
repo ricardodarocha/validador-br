@@ -39,7 +39,7 @@ impl Validador for NovoDocumento<'_> {
 
 **3)** Escreva um Teste Unitário  na unit _tests.rs_  para o tipo criado 
 
-```dif
+```diff
 + #[test] 
 + fn test_validar_novo_documento() {
     //CASE 1
