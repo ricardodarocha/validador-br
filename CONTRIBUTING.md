@@ -97,9 +97,10 @@ impl Validador for NovoDocumento<'_> {
 
 ## 🚀 Criação de novos Testes Unitários e Casos de Uso
 
-Nós encorajamos ampliar a cobertura de Testes. Casos específicos ou casos raros devem ser implementados, como: 
- - documentos com dígito verificador 0
- - número de documentos com caracteres especiais
+Nós encorajamos ampliar a cobertura de testes. Casos específicos ou casos raros devem ser implementados, como: 
+ - documentos com dígito verificador 0   
+ - documentos cujo resto da soma = 10 ou resto = 11  
+ - número de documentos com caracteres especiais 
  - documentos com tamanho variável, etc
  
  Para implementar novos testes basta inserir uma função na unit _testes.rs_ adicionando a macro `#[test]`
@@ -108,11 +109,11 @@ Nós encorajamos ampliar a cobertura de Testes. Casos específicos ou casos raro
 ## 💡 Criação de novas funcionalidades
 
 Novas funcionalidades que estejam muito além da capacidade de validar ou realizar parse seguro devem ser discutidas no 
-[Fórum de discussão](https://github.com/ricardodarocha/validador-br/discussions)
+[💬 Fórum de discussão](https://github.com/ricardodarocha/validador-br/discussions)
 
 ## 💛 Solicitar um novo tipo de documento
 
-Crie uma nova issue com a solicitação. A comunidade irá avaliar a possibilidade de implementar. Importante dar o máximo de informações, 
+Crie uma [➕ nova issue](https://github.com/ricardodarocha/validador-br/issues/new) com a solicitação. A comunidade irá avaliar a possibilidade de implementar. Importante dar o máximo de informações, 
 adicionar links com a documentação técnica, exemplos e pelo menos uma dúzia de números de documento válidos para 
 ser adicionado ao Teste
 
