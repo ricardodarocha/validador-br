@@ -54,20 +54,23 @@ impl Validador for NovoDocumento<'_> {
 > ```
 > O objetivo é ver o teste falhar; só depois iremos implementar o algoritmo do dígito verificador.
 
-**4)** Refatore o método `is_valid()` na unit _types.rs_ para implementar o método de validação do dígito verificador.
+**4)** Refatore o método `is_valid()` na unit _types.rs_ para implementar o método de validação do dígito verificador  
 ⚠ _**Não será aceita Pull Request sem execução do Teste Unitário**_
 
-_O exemplo a seguir retirado do documento **Pis**, que possui um algoritmo mais simples_
+_O exemplo a seguir foi retirado do documento **Pis**, que possui um algoritmo simples com um dígito verificador. Utiliza os pesos 3298765432 e função de validação `onze_menos_modulo11`_
 
 ```diff
 impl Validador for NovoDocumento<'_> {
     fn is_valid(numero: &str) -> bool {
 -       false
-+       let multiplicadores1 = vec![3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-+       let mut digitos = somente_digitos(numero, 11);
-+       let dv1 = digitos.split_off(10);
++       const TAMANHO: usize = 11;
++       const QTD_DV: usize = 1;
++       let multiplicadores = vec![3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
++       let mut digitos = somente_digitos(numero, TAMANHO);
++       completa_esquerda(digitos, TAMANHO);
++       let digitos_verificadores = digitos.split_off(TAMANHO-QTD_DV);
 
-+       dv1[0] == calc_digito(digitos, multiplicadores1, onze_menos_mod11)
++       digitos_verificadores[0] == calc_digito(digitos, multiplicadores, onze_menos_mod11)
     }
 
     fn validar(&self) -> bool {
