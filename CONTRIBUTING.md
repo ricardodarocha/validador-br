@@ -108,7 +108,7 @@ Nós encorajamos ampliar a cobertura de Testes. Casos específicos ou casos raro
 ## 💡 Criação de novas funcionalidades
 
 Novas funcionalidades que estejam muito além da capacidade de validar ou realizar parse seguro devem ser discutidas no 
-[Fórum de discussão]([https://img.shields.io/github/issues/ricardodarocha/validador-br?label=tarefas](https://github.com/ricardodarocha/validador-br/discussions)
+[Fórum de discussão](https://github.com/ricardodarocha/validador-br/discussions)
 
 ## 💛 Solicitar um novo tipo de documento
 
