@@ -72,10 +72,6 @@ impl Validador for NovoDocumento<'_> {
 
 +       digitos_verificadores[0] == calc_digito(digitos, multiplicadores, onze_menos_mod11)
     }
-
-    fn validar(&self) -> bool {
-+       Self::is_valid(self.0)
-    }
 }
 ```
 
