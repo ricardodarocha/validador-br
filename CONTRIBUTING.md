@@ -1,4 +1,11 @@
-# Guidelines para contribuidores
+# Guidelines para novas implementações
+
+## 🔱 Como ajudar
+
+* Acesse as issues e verifique as demandas da comunidade  
+* Participe dos fóruns de discussão e contribua com as análises e boas práticas para implementação  
+* Crie uma WIKI com exemplos de utilização  
+* Crie uma WIKI com casos de uso e casos de sucesso  
 
 ## 📄 Implementando novos documentos
 
