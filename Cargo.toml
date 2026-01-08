@@ -2,7 +2,7 @@
 name = "validador-br"
 version = "0.1.3"
 edition = "2021"
-authors = ["Ricardo da Rocha <ricardodarocha@hotmail.com>"]
+authors = ["Ricardo da Rocha <ricardodarocha@outlook.com>"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 description = "Validador para diversos documentos nacionais do Brasil (BR). Implementa o cálculo do dígito verificador para diversos tipos de documentos nacionais do Brasil Cpf, Cnpj, CartaoCredito, TituloEleitor, Cnh, Rg, Pis; Em breve implementados novos documentos Ie Im Inss Renavam"
