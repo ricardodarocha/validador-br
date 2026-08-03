@@ -1,5 +1,5 @@
 use validador_br::funcoes::mod_11;
-use validador_br::funcoes::{calc_digito, completa_esquerda, somente_digitos};
+use validador_br::funcoes::{calc_digito, completa_esquerda, somente_digitos, alfanumerico};
 use validador_br::types::{CartaoCredito, Cnh, Cnpj, Cpf, Cns, Pis, Renavam, Rg, 
     TituloEleitor, CodigoBarrasGs1,
 };
@@ -137,6 +137,27 @@ fn test_somente_digitos() {
 }
 
 #[test]
+fn test_alfanumerico() {
+    
+    let tests: Vec<(&str, Vec<char>)> = vec![
+        ("0", vec!['0']),
+        ("1", vec!['1']),
+        ("5", vec!['5']),
+        ("9", vec!['9']),
+        ("10", vec!['1', '0']),
+        ("123", vec!['1', '2', '3']),
+        ("1.23-0", vec!['1', '2', '3', '0']),
+        ("1.23/001-0", vec!['1', '2', '3', '0', '0', '1', '0']),
+        ("hv.72N.DOZ/0001-10", vec!['H', 'V', '7', '2', 'N', 'D', 'O', 'Z', '0', '0', '0', '1','1','0' ]),
+    ];
+
+    for (input, expected) in tests {
+        let result = alfanumerico(input, input.len());
+        assert_eq!(result, expected);
+    }
+}
+
+#[test]
 fn test_isvalid_cpf() {
     let cpfs: Vec<&str> = vec![
         "085.668.830-47",
@@ -181,7 +202,13 @@ fn test_valid_cnpj() {
         "89.267.553/0001-19",
         "40.357.317/0001-02",
         "46.922.782/0001-17",
-        "86.107.547/0001-06"
+        "86.107.547/0001-06",
+        "0P.YJZ.03W/0001-81",
+        "PO.GH4.ZCY/0001-11",
+        "HV.72N.DOZ/0001-10",
+        "R6.S3E.T8Y/0001-32",
+        "VN.051.YG3/0001-90",
+        "2H.1LW.45W/0001-69",
     ];
 
     for cnpj in &cnpjs {

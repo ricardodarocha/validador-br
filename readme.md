@@ -17,6 +17,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
 [Contribua](CONTRIBUTING.md) comentando, compartilhando ou realizando um pull request!
 
+## [0.1.4] - 2026-07-04
+
+- [x] Implementar suporte ao CNPJ alfanumérico
+
 ## [0.1.3] - 2023-06-12
 
 - [x] Implementado trait `try_from()` `try_into()`

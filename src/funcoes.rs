@@ -69,6 +69,15 @@ pub fn somente_digitos(doc: &str, n: usize) -> Vec<u32> {
         .collect()
 }
 
+pub fn alfanumerico(doc: &str, n: usize) -> Vec<char> {
+    doc
+        .to_uppercase()
+        .as_str()
+        .chars().filter(|c| c.is_alphanumeric())
+        .take(n)
+        .collect()
+}
+
 pub fn completa_esquerda(numero: &mut Vec<u32>, n: usize) {
     if numero.len() < n {
         for _ in 0..(n - numero.len()) {

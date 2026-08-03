@@ -1,5 +1,4 @@
-use crate::funcoes::{calc_digito, calc_digito_mod11, completa_esquerda, mod_11, 
-onze_menos_mod11, somente_digitos,
+use crate::funcoes::{alfanumerico, calc_digito, calc_digito_mod11, completa_esquerda, mod_11, onze_menos_mod11, somente_digitos,
 };
 
 use crate::types::{CartaoCredito, Cnh, Cnpj, Cns, CodigoBarrasGs1, Cpf, Pis, Renavam, 
@@ -36,22 +35,41 @@ impl Validador for Cpf<'_> {
     }
 }
 
+fn char_to_ascii(c: &char) -> u32 {
+    let d = (*c) as u8;
+    assert!(d >= 48, "Digito invalido [{} {}]", c, d);
+    (d - 48) as u32
+}
+
 impl Validador for Cnpj<'_> {
     fn is_valid(numero: &str) -> bool {
         let multiplicadores1 = vec![5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-        let digitos = somente_digitos(numero, 14);
-        let part1 = digitos[0..12].to_vec();
-        let dv1 = &digitos[12];
+        let digitos = alfanumerico(numero, 14);
+
+        let part1 = digitos[0..12]
+            .to_vec()
+            .into_iter()
+            .map(|c: char| char_to_ascii(&c))
+            .collect();
+
+        let dv1 = char_to_ascii(&digitos[12]);
+        
         let multiplicadores2 = vec![6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-        let part2 = digitos[0..13].to_vec();
-        let dv2 = &digitos[13];
+        let part2 = digitos[0..13]
+        .to_vec()
+            .into_iter()
+            .map(|c: char| char_to_ascii(&c))
+            .collect();
+        
+        let dv2 = char_to_ascii(&digitos[13]);
+                
         let decima = |x: u32| mod_11(10 * x) as u32;
 
         let digitos_verificadores: (u32, u32) = (
             calc_digito(part1, multiplicadores1, decima),
             calc_digito(part2, multiplicadores2, decima),
         );
-        digitos_verificadores == (*dv1, *dv2)
+        digitos_verificadores == (dv1 as u32, dv2 as u32)
     }
 
     fn validar(&self) -> bool {
