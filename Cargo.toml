@@ -1,6 +1,6 @@
 [package]
 name = "validador-br"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["Ricardo da Rocha <ricardodarocha@outlook.com>"]
 license = "MIT OR Apache-2.0"
