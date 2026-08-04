@@ -15,9 +15,13 @@
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
 [Contribua](CONTRIBUTING.md) comentando, compartilhando ou realizando um pull request!
 
-## [0.1.5] - incoming
+## [0.1.6] - 2026-07-04
 
-- [ ] Remoção do namespace types::* , acesse os documentos diretamente `use validador-br::Cnpj`
+- [x] Implementado DV do código RENAVAM
+
+## [0.1.5] - 2026-07-04
+
+- [x] Remoção do namespace types::*. Acesse os documentos diretamente `use validador-br::Cnpj`
 
 ## [0.1.4] - 2026-07-03
 
@@ -75,7 +79,7 @@ validador-br = "0.1.4"
 ## Uso básico
 
 ```rust
-use validador_br::types::{Cpf, Cnpj};
+use validador_br::{Cpf, Cnpj, Cnh};
 
 let cpf = Cpf::try_from("085.668.830-47");
 match cpf {
@@ -93,8 +97,7 @@ match cnpj {
 Também é possível usar o método `validar()`.
 
 ```rust
-use validador_br::validador::*;
-use validador_br::types::{Cpf, Cnh};
+use validador_br::Validador;
 Cpf("255.248.930-33").validar(); // ✅ true 
 Cpf("25524893033").validar();// ✅ true
 Cnh("25524893033").validar();// ❌ false
@@ -104,8 +107,6 @@ Cnh("25524893033").validar();// ❌ false
 ## Validando uma lista de cpfs
 
 ```rust
-use validador_br::validador::*;
-use validador_br::types::Cpf;
 
 fn main() {
     let cpf_list = [&"133.976.410-55", &"922.261.830-00", &"922.261.830-01", &"218.571.960-23"];
@@ -122,8 +123,6 @@ fn main() {
 ## Utilizando Strings dinâmicas
 
 ```rust
-# use validador_br::validador::*;
-# use validador_br::types::Cpf;
 let cpf_string = String::from("133.976.410-55");
 if Cpf(cpf_string.as_str()).validar() {}
 ```
