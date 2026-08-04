@@ -4,8 +4,6 @@
   <i>A Brazilian document numbers validator written in rust</i>
   <h3>Um validador para diversos documentos nacionais (BR) em rust </h3>
   
-  <img src="https://media.licdn.com/dms/image/sync/D4D27AQGMP3vWqjmmhw/articleshare-shrink_1280_800/0/1686427898640?e=1687125600&v=beta&t=LLO4T-AbzVtT-YThIGw2IrCLms5NQRI3-sm7yJcIupg"/>
-
 </div>
 
 [![Crates.io](https://img.shields.io/crates/v/validador-br)](https://crates.io/crates/validador-br)
@@ -17,7 +15,11 @@
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
 [Contribua](CONTRIBUTING.md) comentando, compartilhando ou realizando um pull request!
 
-## [0.1.4] - 2026-07-04
+## [0.1.5] - incoming
+
+- [ ] Remoção do namespace types::* , acesse os documentos diretamente `use validador-br::Cnpj`
+
+## [0.1.4] - 2026-07-03
 
 - [x] Implementar suporte ao CNPJ alfanumérico
 
@@ -67,22 +69,28 @@ Adicione a dependência ao seu `Cargo.toml`:
 
 ```toml
 [dependencies]
-validador-br = "0.1.2"
+validador-br = "0.1.4"
 ```
 
 ## Uso básico
 
 ```rust
-use validador_br::types::{Cpf};
+use validador_br::types::{Cpf, Cnpj};
 
 let cpf = Cpf::try_from("085.668.830-47");
 match cpf {
     Ok(cpf) => println!("{}✅", cpf.0),
     Err(invalido) => panic!("{}", invalido)
 };
+
+let cnpj = Cnpj::try_from("90.33N.F02/0001-88");
+match cnpj {
+    Ok(cnpj) => println!("{}✅", cnpj.0),
+    Err(invalido) => panic!("{}", invalido)
+};
 ```
 
-Também é possível usar o método `validar()` embora não seja recomendado.
+Também é possível usar o método `validar()`.
 
 ```rust
 use validador_br::validador::*;
