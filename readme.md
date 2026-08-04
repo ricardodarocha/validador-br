@@ -15,11 +15,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/ricardodarocha/validador-br?style=social&label=Star&maxAge=1)](https://github.com/ricardodarocha/validador-br/stargazers/)
 [Contribua](CONTRIBUTING.md) comentando, compartilhando ou realizando um pull request!
 
-## [0.1.6] - 2026-07-04
-
-- [x] Implementado DV do código RENAVAM
-
-## [0.1.5] - 2026-07-04
+ ## [0.1.5] - 2026-07-04
 
 - [x] Remoção do namespace types::*. Acesse os documentos diretamente `use validador-br::Cnpj`
 
