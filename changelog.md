@@ -2,6 +2,14 @@
 
 Qualquer alteração notável deve ser documentada neste arquivo
 
+## [0.1.5] - incoming
+
+- [ ] Remoção do namespace types::* , acesse os documentos diretamente `use validador-br::Cnpj`
+
+## [0.1.4] - 2026-07-03
+
+- [x] Implementar suporte ao CNPJ alfanumérico
+
 ## [0.1.3] - 2023-06-12
 
 - [x] Implementado trait `try_from()` `try_into()`
